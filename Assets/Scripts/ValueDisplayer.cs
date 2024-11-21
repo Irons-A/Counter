@@ -10,15 +10,8 @@ public class ValueDisplayer : MonoBehaviour
 
     private void Awake()
     {
-        if (TryGetComponent<TextMeshProUGUI>(out TextMeshProUGUI tmp))
-        {
-            _text = tmp;
-        }
-
-        if (TryGetComponent<Counter>(out Counter counter))
-        {
-            _counter = counter;
-        }
+        _text = GetComponent<TextMeshProUGUI>();
+        _counter = GetComponent<Counter>();
     }
 
     private void OnEnable()
@@ -31,7 +24,7 @@ public class ValueDisplayer : MonoBehaviour
         _counter.ValueUpdated -= UpdateValueDisplay;
     }
 
-    public void UpdateValueDisplay(int value)
+    private void UpdateValueDisplay(int value)
     {
         _text.text = value.ToString();
     }
