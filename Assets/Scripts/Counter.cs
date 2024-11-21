@@ -6,19 +6,18 @@ using UnityEngine;
 
 public class Counter : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _text;
-
     private bool _isActive = false;
     private int _counterValue = 0;
     private float _delay = 0.5f;
     private Coroutine _coroutine;
+    private ValueDisplayer _valueDisplayer;
 
     private void Start()
     {
-        if(TryGetComponent<TextMeshProUGUI>(out TextMeshProUGUI component))
+        if (TryGetComponent<ValueDisplayer>(out ValueDisplayer valueDisplayer))
         {
-            _text = component;
-            _text.text = _counterValue.ToString();
+            _valueDisplayer = valueDisplayer;
+            _valueDisplayer.UpdateValueDisplay(_counterValue);
         }
     }
 
@@ -59,7 +58,7 @@ public class Counter : MonoBehaviour
         while(true)
         {
             _counterValue++;
-            _text.text = _counterValue.ToString();
+            _valueDisplayer.UpdateValueDisplay(_counterValue);
             yield return wait;
         }
     }
