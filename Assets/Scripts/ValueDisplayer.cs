@@ -8,7 +8,7 @@ public class ValueDisplayer : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _text;
     [SerializeField] private Counter _counter;
 
-    private void Start()
+    private void Awake()
     {
         if (TryGetComponent<TextMeshProUGUI>(out TextMeshProUGUI tmp))
         {
@@ -26,6 +26,9 @@ public class ValueDisplayer : MonoBehaviour
         _counter.ValueUpdated += UpdateValueDisplay;
     }
 
+    private void OnDisable()
+    {
+        _counter.ValueUpdated -= UpdateValueDisplay;
     }
 
     public void UpdateValueDisplay(int value)

@@ -9,6 +9,8 @@ public class Counter : MonoBehaviour
 {
     public event Action<int> ValueUpdated;
 
+    const int MouseButtonIndex = 0;
+
     [SerializeField] private int _counterValue = 0;
 
     private bool _isActive = false;
@@ -22,7 +24,7 @@ public class Counter : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(MouseButtonIndex))
         {
             if (_isActive)
             {
