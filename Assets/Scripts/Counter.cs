@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -6,19 +7,17 @@ using UnityEngine;
 
 public class Counter : MonoBehaviour
 {
+    public event Action<int> ValueUpdated;
+
+    [SerializeField] private int _counterValue = 0;
+
     private bool _isActive = false;
-    private int _counterValue = 0;
     private float _delay = 0.5f;
     private Coroutine _coroutine;
-    private ValueDisplayer _valueDisplayer;
 
     private void Start()
     {
-        if (TryGetComponent<ValueDisplayer>(out ValueDisplayer valueDisplayer))
-        {
-            _valueDisplayer = valueDisplayer;
-            _valueDisplayer.UpdateValueDisplay(_counterValue);
-        }
+        ValueUpdated?.Invoke(_counterValue);
     }
 
     private void Update()
@@ -58,7 +57,7 @@ public class Counter : MonoBehaviour
         while(true)
         {
             _counterValue++;
-            _valueDisplayer.UpdateValueDisplay(_counterValue);
+            ValueUpdated?.Invoke(_counterValue);
             yield return wait;
         }
     }

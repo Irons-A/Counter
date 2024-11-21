@@ -6,6 +6,7 @@ using UnityEngine;
 public class ValueDisplayer : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _text;
+    [SerializeField] private Counter _counter;
 
     private void Start()
     {
@@ -13,6 +14,18 @@ public class ValueDisplayer : MonoBehaviour
         {
             _text = tmp;
         }
+
+        if (TryGetComponent<Counter>(out Counter counter))
+        {
+            _counter = counter;
+        }
+    }
+
+    private void OnEnable()
+    {
+        _counter.ValueUpdated += UpdateValueDisplay;
+    }
+
     }
 
     public void UpdateValueDisplay(int value)
